@@ -1,5 +1,6 @@
 package com.learnsecurity.controller;
 
+import com.learnsecurity.model.AuthenticationRequest;
 import com.learnsecurity.model.AuthenticationResponse;
 import com.learnsecurity.model.RegisterRequest;
 import com.learnsecurity.service.impl.AuthenticationServiceImpl;
@@ -18,8 +19,18 @@ public class AuthenticationController {
     private final AuthenticationServiceImpl authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<AuthenticationResponse> register(
+            @RequestBody RegisterRequest registerRequest
+    ) {
         AuthenticationResponse response = authenticationService.register(registerRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponse> login(
+            @RequestBody AuthenticationRequest request
+    ) {
+        AuthenticationResponse response = authenticationService.login(request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
